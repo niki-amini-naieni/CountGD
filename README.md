@@ -1,2 +1,157 @@
-# CountGD
-Includes the code for training and testing the CountGD model from the paper COUNTGD: Multi-Modal Open-World Counting.
+## CountGD: Multi-Modal Open-World Counting
+
+Niki Amini-Naieni, Tengda Han, & Andrew Zisserman
+
+Official PyTorch implementation for CountGD. Details can be found in the paper.
+[[Paper]]() [[Project page]]()
+
+<img src=img/teaser.jpg width="100%"/>
+<img src=img/architecture.jpg width="100%"/>
+
+### Contents
+* [Preparation](#preparation)
+* [CountGD Inference & Pre-Trained Weights](#countgd-inference--pre-trained-weights)
+* [CountGD Train](#countgd-train)
+* [Using New Dataset]()
+* [Citation](#citation)
+* [Acknowledgements](#acknowledgements)
+
+### Preparation
+#### 1. Download Dataset
+
+In our project, the FSC-147 dataset is used.
+Please visit following link to download this dataset.
+
+* [FSC-147](https://github.com/cvlab-stonybrook/LearningToCountEverything)
+
+#### 2. Install GCC
+
+Install GCC. In this project, GCC 11.3 and 11.4 were tested. The following command installs GCC and other development libraries and tools required for compiling software in Ubuntu.
+
+```
+sudo apt update
+sudo apt install build-essential
+```
+
+#### 3. Clone Repository
+
+```
+git clone git@github.com:niki-amini-naieni/CountGD.git
+```
+
+#### 4. Set Up Anaconda Environment:
+
+The following commands will create a suitable Anaconda environment for running the CountGD training and inference procedures. To produce the results in the paper, we used [Anaconda version 2024.02-1](https://repo.anaconda.com/archive/Anaconda3-2024.02-1-Linux-x86_64.sh).
+
+```
+conda create -n countgd python=3.9.19
+conda activate countgd
+cd countgd
+pip install -r requirements.txt
+export CC=/usr/bin/gcc-11 # this ensures that gcc 11 is being used for compilation
+cd models/GroundingDINO/ops
+python setup.py build install
+python test.py # should result in 6 lines of * True
+pip install git+https://github.com/facebookresearch/segment-anything.git
+cd ../../../
+```
+
+#### 5. Download Pre-Trained Weights
+
+* Make the ```checkpoints``` directory inside the ```countgd``` repository.
+
+  ```
+  mkdir checkpoints
+  cd checkpoints
+  ```
+
+* Start Python in the terminal.
+  
+  ```
+  python
+  ```
+
+* Execute the following commands in the Python terminal.
+
+  ```
+  # inside python terminal
+  from transformers import BertConfig, BertModel
+  from transformers import AutoTokenizer
+  
+  config = BertConfig.from_pretrained("bert-base-uncased")
+  model = BertModel.from_pretrained("bert-base-uncased", add_pooling_layer=False, config=config)
+  tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+  
+  config.save_pretrained("bert-base-uncased")
+  model.save_pretrained("bert-base-uncased")
+  tokenizer.save_pretrained("bert-base-uncased")
+  
+  ```
+
+* Exit the Python terminal with Ctrl + Z.
+
+* Download the pretrained Swin-B GroundingDINO weights.
+
+  ```
+  wget https://github.com/IDEA-Research/GroundingDINO/releases/download/v0.1.0-alpha2/groundingdino_swinb_cogcoor.pth
+  ```
+
+* Download the pretrained ViT-H Segment Anything Model (SAM) weights.
+
+  ```
+  wget https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth
+  ```
+
+### CountGD Inference & Pre-Trained Weights
+
+The model weights used in the paper can be downloaded from [Google Drive link (1.2 GB)](https://drive.google.com/file/d/1JpfsZtcGLUM0j05CpTN4kCOrmrLf_vLz/view?usp=sharing). To reproduce the results in the paper, run the following commands after activating the Anaconda environment set up in step 4 of [Preparation](#preparation). Make sure to change the directory and file names to the ones you set up in step 1 of [Preparation](#preparation). Make sure that the model file name refers to the model that you downloaded.
+
+For the validation set (takes ~ 26 minutes on 1 RTX 3090 GPU):
+
+```
+python -u main.py --output_dir ./countgd_val -c config/cfg_fsc147_val.py --eval --datasets config/datasets_fsc147_val.json --pretrain_model_path checkpoints/checkpoint_fsc147_best.pth --options text_encoder_type=checkpoints/bert-base-uncased --crop --sam_tt_norm --remove_bad_exemplar
+```
+
+For the validation set with no Segment Anything Model (SAM) test-time normalization and, hence, slightly reduced counting accuracy (takes ~ 6 minutes on 1 RTX 3090 GPU):
+
+```
+python -u main.py --output_dir ./countgd_val -c config/cfg_fsc147_val.py --eval --datasets config/datasets_fsc147_val.json --pretrain_model_path checkpoints/checkpoint_fsc147_best.pth --options text_encoder_type=checkpoints/bert-base-uncased --crop --remove_bad_exemplar
+```
+
+For the test set (takes ~ 26 minutes on 1 RTX 3090 GPU):
+
+```
+python -u main.py --output_dir ./countgd_test -c config/cfg_fsc147_test.py --eval --datasets config/datasets_fsc147_test.json --pretrain_model_path checkpoints/checkpoint_fsc147_best.pth --options text_encoder_type=checkpoints/bert-base-uncased --crop --sam_tt_norm --remove_bad_exemplar
+```
+
+For the test set with no Segment Anything Model (SAM) test-time normalization and, hence, slightly reduced counting accuracy (takes ~ 6 minutes on 1 RTX 3090 GPU):
+
+```
+python -u main.py --output_dir ./countgd_test -c config/cfg_fsc147_test.py --eval --datasets config/datasets_fsc147_test.json --pretrain_model_path checkpoints/checkpoint_fsc147_best.pth --options text_encoder_type=checkpoints/bert-base-uncased --crop --remove_bad_exemplar
+```
+
+* Note: Inference can be further sped up by increasing the batch size for evaluation
+
+### CountGD Train
+
+To train the model, run the following command after activating the Anaconda environment set up in step 4 of [Preparation](#preparation). Make sure to change the directory and file names to the ones you set up in step 1 of [Preparation](#preparation). 
+
+```
+nohup python -u main.py --output_dir ./countgd_train -c config/cfg_fsc147_val.py --datasets config/datasets_fsc147_val.json --pretrain_model_path checkpoints/groundingdino_swinb_cogcoor.pth --options text_encoder_type=checkpoints/bert-base-uncased >>./training.log 2>&1 &
+```
+
+### Citation
+
+```
+@InProceedings{AminiNaieni24,
+  author = "Amini-Naieni, N. and Han, T. and Zisserman, A.",
+  title = "CountGD: Multi-Modal Open-World Counting",
+  booktitle = "arXiv",
+  year = "2024",
+}
+```
+
+### Acknowledgements
+
+This repository is based on the [Open-GroundingDino](https://github.com/longzw1997/Open-GroundingDino/tree/main) and uses code from the [GroundingDINO repository](https://github.com/IDEA-Research/GroundingDINO). If you have any questions about our code implementation, please contact us at [niki.amini-naieni@eng.ox.ac.uk](mailto:niki.amini-naieni@eng.ox.ac.uk).
+
