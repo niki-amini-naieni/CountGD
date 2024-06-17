@@ -362,6 +362,7 @@ def get_count_errs(
     targets,
     tokenized_captions,
     input_captions,
+    predictor=None,
 ):
     logits = outputs["pred_logits"].sigmoid()
     boxes = outputs["pred_boxes"]
@@ -835,7 +836,6 @@ def get_count_errs(
                 pred_cnt += sample_logits_cropped.shape[0]
 
         elif args.sam_tt_norm:
-            predictor = get_sam(sam_checkpoint=args.sam_model_path)
             pred_cnt = tt_norm_sam(
                 predictor,
                 pred_cnt,
@@ -875,6 +875,11 @@ def evaluate(
 ):
     model.eval()
     criterion.eval()
+
+    if args.sam_tt_norm:
+        predictor = get_sam(sam_checkpoint=args.sam_model_path)
+    else:
+        predictor = None
 
     metric_logger = utils.MetricLogger(delimiter="  ")
     if not wo_class_error:
@@ -955,6 +960,7 @@ def evaluate(
                 targets,
                 tokenized_captions,
                 input_captions,
+                predictor=predictor,
             )
         orig_target_sizes = torch.stack([t["orig_size"] for t in targets], dim=0)
 
