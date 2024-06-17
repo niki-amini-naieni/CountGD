@@ -45,7 +45,7 @@ The following commands will create a suitable Anaconda environment for running t
 ```
 conda create -n countgd python=3.9.19
 conda activate countgd
-cd countgd
+cd CountGD
 pip install -r requirements.txt
 export CC=/usr/bin/gcc-11 # this ensures that gcc 11 is being used for compilation
 cd models/GroundingDINO/ops
