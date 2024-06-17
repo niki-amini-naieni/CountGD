@@ -1,0 +1,16 @@
+cython==3.0.9
+submitit==1.5.1
+scipy==1.12.0
+termcolor==2.4.0
+addict==2.4.0
+yapf==0.40.1
+timm==0.9.16
+torch==2.2.1
+torchvision==0.17.1
+transformers==4.39.1
+numpy==1.26.4
+opencv-python==4.9.0.80
+supervision==0.6.0
+pycocotools==2.0.7
+pyyaml==6.0.1
+colorlog==6.8.2
