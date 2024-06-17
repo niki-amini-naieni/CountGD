@@ -12,7 +12,6 @@ Official PyTorch implementation for CountGD. Details can be found in the paper.
 * [Preparation](#preparation)
 * [CountGD Inference & Pre-Trained Weights](#countgd-inference--pre-trained-weights)
 * [CountGD Train](#countgd-train)
-* [Using New Dataset]()
 * [Citation](#citation)
 * [Acknowledgements](#acknowledgements)
 
