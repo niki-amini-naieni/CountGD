@@ -147,7 +147,7 @@ nohup python -u main.py --output_dir ./countgd_train -c config/cfg_fsc147_val.py
 ### Citation
 
 ```
-@InProceedings{AminiNaieni24,
+@article{AminiNaieni24,
   author = "Amini-Naieni, N. and Han, T. and Zisserman, A.",
   title = "CountGD: Multi-Modal Open-World Counting",
   booktitle = "arXiv",
