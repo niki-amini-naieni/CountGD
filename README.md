@@ -6,6 +6,9 @@ Official PyTorch implementation for CountGD. Details can be found in the paper.
 [[Paper]]() [[Project page]]()
 
 <img src=img/teaser.jpg width="100%"/>
+_Counting with Visual Exemplars, Text, or Both Together_
+
+### CountGD Architecture
 <img src=img/architecture.jpg width="100%"/>
 
 ### Contents
