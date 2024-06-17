@@ -1,4 +1,4 @@
-## CountGD: Multi-Modal Open-World Counting
+# CountGD: Multi-Modal Open-World Counting
 
 Niki Amini-Naieni, Tengda Han, & Andrew Zisserman
 
@@ -13,22 +13,22 @@ Official PyTorch implementation for CountGD. Details can be found in the paper.
 
 *CountGD Architecture*
 
-### Contents
+## Contents
 * [Preparation](#preparation)
 * [CountGD Inference & Pre-Trained Weights](#countgd-inference--pre-trained-weights)
 * [CountGD Train](#countgd-train)
 * [Citation](#citation)
 * [Acknowledgements](#acknowledgements)
 
-### Preparation
-#### 1. Download Dataset
+## Preparation
+### 1. Download Dataset
 
 In our project, the FSC-147 dataset is used.
 Please visit following link to download this dataset.
 
 * [FSC-147](https://github.com/cvlab-stonybrook/LearningToCountEverything)
 
-#### 2. Install GCC
+### 2. Install GCC
 
 Install GCC. In this project, GCC 11.3 and 11.4 were tested. The following command installs GCC and other development libraries and tools required for compiling software in Ubuntu.
 
@@ -37,13 +37,13 @@ sudo apt update
 sudo apt install build-essential
 ```
 
-#### 3. Clone Repository
+### 3. Clone Repository
 
 ```
 git clone git@github.com:niki-amini-naieni/CountGD.git
 ```
 
-#### 4. Set Up Anaconda Environment:
+### 4. Set Up Anaconda Environment:
 
 The following commands will create a suitable Anaconda environment for running the CountGD training and inference procedures. To produce the results in the paper, we used [Anaconda version 2024.02-1](https://repo.anaconda.com/archive/Anaconda3-2024.02-1-Linux-x86_64.sh).
 
@@ -60,7 +60,7 @@ pip install git+https://github.com/facebookresearch/segment-anything.git
 cd ../../../
 ```
 
-#### 5. Download Pre-Trained Weights
+### 5. Download Pre-Trained Weights
 
 * Make the ```checkpoints``` directory inside the ```countgd``` repository.
 
@@ -106,7 +106,7 @@ cd ../../../
   wget https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth
   ```
 
-### CountGD Inference & Pre-Trained Weights
+## CountGD Inference & Pre-Trained Weights
 
 The model weights used in the paper can be downloaded from [Google Drive link (1.2 GB)](https://drive.google.com/file/d/1JpfsZtcGLUM0j05CpTN4kCOrmrLf_vLz/view?usp=sharing). To reproduce the results in the paper, run the following commands after activating the Anaconda environment set up in step 4 of [Preparation](#preparation). Make sure to change the directory and file names in [datasets_fsc147_val.json](https://github.com/niki-amini-naieni/CountGD/blob/main/config/datasets_fsc147_val.json) and [datasets_fsc147_test.json](https://github.com/niki-amini-naieni/CountGD/blob/main/config/datasets_fsc147_test.json) to the ones you set up in step 1 of [Preparation](#preparation). Make sure that the model file name refers to the model that you downloaded.
 
@@ -136,7 +136,7 @@ python -u main.py --output_dir ./countgd_test -c config/cfg_fsc147_test.py --eva
 
 * Note: Inference can be further sped up by increasing the batch size for evaluation
 
-### CountGD Train
+## CountGD Train
 
 To train the model, run the following command after activating the Anaconda environment set up in step 4 of [Preparation](#preparation). Make sure to change the directory and file names to the ones you set up in step 1 of [Preparation](#preparation). 
 
@@ -144,7 +144,7 @@ To train the model, run the following command after activating the Anaconda envi
 nohup python -u main.py --output_dir ./countgd_train -c config/cfg_fsc147_val.py --datasets config/datasets_fsc147_val.json --pretrain_model_path checkpoints/groundingdino_swinb_cogcoor.pth --options text_encoder_type=checkpoints/bert-base-uncased >>./training.log 2>&1 &
 ```
 
-### Citation
+## Citation
 
 ```
 @article{AminiNaieni24,
