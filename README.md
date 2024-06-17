@@ -62,48 +62,28 @@ cd ../../../
 
 ### 5. Download Pre-Trained Weights
 
-* Make the ```checkpoints``` directory inside the ```countgd``` repository.
+* Make the ```checkpoints``` directory inside the ```CountGD``` repository.
 
   ```
   mkdir checkpoints
-  cd checkpoints
   ```
 
-* Start Python in the terminal.
-  
-  ```
-  python
-  ```
-
-* Execute the following commands in the Python terminal.
+* Execute the following command.
 
   ```
-  # inside python terminal
-  from transformers import BertConfig, BertModel
-  from transformers import AutoTokenizer
-  
-  config = BertConfig.from_pretrained("bert-base-uncased")
-  model = BertModel.from_pretrained("bert-base-uncased", add_pooling_layer=False, config=config)
-  tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
-  
-  config.save_pretrained("bert-base-uncased")
-  model.save_pretrained("bert-base-uncased")
-  tokenizer.save_pretrained("bert-base-uncased")
-  
+  python download_bert.py
   ```
-
-* Exit the Python terminal with Ctrl + Z.
 
 * Download the pretrained Swin-B GroundingDINO weights.
 
   ```
-  wget https://github.com/IDEA-Research/GroundingDINO/releases/download/v0.1.0-alpha2/groundingdino_swinb_cogcoor.pth
+  wget -P checkpoints https://github.com/IDEA-Research/GroundingDINO/releases/download/v0.1.0-alpha2/groundingdino_swinb_cogcoor.pth
   ```
 
 * Download the pretrained ViT-H Segment Anything Model (SAM) weights.
 
   ```
-  wget https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth
+  wget -P checkpoints https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth
   ```
 
 ## CountGD Inference & Pre-Trained Weights
