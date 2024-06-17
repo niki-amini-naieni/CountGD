@@ -6,6 +6,8 @@ import numpy as np
 import math
 import os
 import sys
+import io
+import contextlib
 from typing import Iterable
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
@@ -1056,8 +1058,12 @@ def evaluate(
         panoptic_evaluator.synchronize_between_processes()
 
     # accumulate predictions from all images
-    if coco_evaluator is not None:
-        coco_evaluator.accumulate()
+    
+    with contextlib.redirect_stdout(io.StringIO()):
+        # Suppress print output from unused [GroundingDINO] functions.
+        if coco_evaluator is not None:
+            coco_evaluator.accumulate()
+            coco_evaluator.summarize()
     
     panoptic_res = None
     if panoptic_evaluator is not None:
