@@ -5,7 +5,7 @@ Niki Amini-Naieni, Tengda Han, & Andrew Zisserman
 Official PyTorch implementation for CountGD. Details can be found in the paper.
 [[Paper]]() [[Project page]]()
 <p align="center">
-    <img src="app-demo.gif" width="70%"/>
+    <img src="app-demo.gif" width="100%"/>
 </p>
 <img src=img/teaser.jpg width="100%"/>
 
