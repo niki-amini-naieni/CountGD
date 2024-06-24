@@ -24,8 +24,8 @@ import torch.utils.data
 import torchvision
 from pycocotools import mask as coco_mask
 
-from datasets.data_util import preparing_dataset
-import datasets.transforms as T
+from datasets_inference.data_util import preparing_dataset
+import datasets_inference.transforms as T
 from util.box_ops import box_cxcywh_to_xyxy, box_iou
 
 __all__ = ["build"]
@@ -666,7 +666,7 @@ def make_coco_transforms(image_set, fix_size=False, strong_aug=False, args=None)
             )
 
         if strong_aug:
-            import datasets.sltransform as SLT
+            import datasets_inference.sltransform as SLT
 
             return T.Compose(
                 [
