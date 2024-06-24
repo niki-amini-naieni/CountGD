@@ -4,7 +4,7 @@ Niki Amini-Naieni, Tengda Han, & Andrew Zisserman
 
 Official PyTorch implementation for CountGD. Details can be found in the paper, [[Paper]]() [[Project page]]().
 
-## Try Using CountGD to Count with Text, Visual Exemplars, or Both Together Through the App [[Here]]().
+## Try Using CountGD to Count with Text, Visual Exemplars, or Both Together Through the App [[Coming Soon]]().
 
 <p align="center">
     <img src="app-demo.gif" width="100%"/>
