@@ -1,0 +1,18 @@
+{
+  "train": [
+    {
+      "root": "../CountGD/FSC147_384_V2/images_384_VarV2",
+      "anno": "./data/fsc147_gdino/fsc147_odvg/fsc147_train_odvg_exemplars.jsonl",
+      "label_map": "./data/fsc147_gdino/fsc147_odvg/train_label_map.json",
+      "dataset_mode": "odvg"
+    }
+  ],
+  "val": [
+    {
+      "root": "../CountGD/FSC147_384_V2/images_384_VarV2",
+      "anno": "./data/fsc147_gdino/fsc147_coco/coco_val_exemplars.json",
+      "label_map": null,
+      "dataset_mode": "coco"
+    }
+  ]
+}

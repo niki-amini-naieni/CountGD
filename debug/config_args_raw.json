@@ -1,0 +1,30 @@
+{
+  "config_file": "config/cfg_fsc147_vit_b.py",
+  "options": {
+    "text_encoder_type": "checkpoints/bert-base-uncased"
+  },
+  "datasets": "config/datasets_fsc147.json",
+  "remove_difficult": false,
+  "fix_size": false,
+  "output_dir": "./debug",
+  "note": "",
+  "device": "cuda",
+  "seed": 42,
+  "resume": "",
+  "pretrain_model_path": "checkpoints/groundingdino_swinb_cogcoor.pth",
+  "finetune_ignore": null,
+  "start_epoch": 0,
+  "eval": false,
+  "num_workers": 8,
+  "test": false,
+  "debug": false,
+  "find_unused_params": false,
+  "save_results": false,
+  "save_log": false,
+  "world_size": 1,
+  "dist_url": "env://",
+  "rank": 0,
+  "local_rank": 0,
+  "amp": false,
+  "distributed": false
+}

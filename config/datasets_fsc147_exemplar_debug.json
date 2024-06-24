@@ -1,0 +1,18 @@
+{
+  "train": [
+    {
+      "root": "/scratch/shared/beegfs/nikian/FSC-147/images_384_VarV2",
+      "anno": "/scratch/shared/beegfs/nikian/fsc147_odvg_exemplars/fsc147_train_odvg_exemplars.jsonl",
+      "label_map": "/scratch/shared/beegfs/nikian/fsc147_odvg_exemplars/train_label_map.json",
+      "dataset_mode": "odvg"
+    }
+  ],
+  "val": [
+    {
+      "root": "/scratch/shared/beegfs/nikian/FSC-147/images_384_VarV2",
+      "anno": "/scratch/shared/beegfs/nikian/fsc147_coco/coco_val.json",
+      "label_map": null,
+      "dataset_mode": "coco"
+    }
+  ]
+}
