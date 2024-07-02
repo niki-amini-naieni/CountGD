@@ -120,11 +120,7 @@ python -u main_inference.py --output_dir ./countgd_test -c config/cfg_fsc147_tes
 
 ## CountGD Train
 
-To train the model, run the following command after activating the Anaconda environment set up in step 4 of [Preparation](#preparation). Make sure to change the directory and file names to the ones you set up in step 1 of [Preparation](#preparation). Note: the training code is not as clean and well-documented as the inference code. This is because, for reproducibility purposes, the training code was left exactly as it was when training the published model.
-
-```
-nohup python -u main.py --output_dir ./countgd_train -c config/cfg_fsc147_vit_b.py --datasets config/datasets_fsc147.json --pretrain_model_path checkpoints/groundingdino_swinb_cogcoor.pth --options text_encoder_type=checkpoints/bert-base-uncased >>./training.log 2>&1 &
-```
+Training code and instructions coming soon!
 
 ## Citation
 
