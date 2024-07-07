@@ -6,9 +6,6 @@ Official PyTorch implementation for CountGD. Details can be found in the paper, 
 
 ## Try Using CountGD to Count with Text, Visual Exemplars, or Both Together Through the App [[HERE]](https://huggingface.co/spaces/nikigoli/countgd).
 
-<p align="center">
-    <img src="app-demo.gif" width="100%"/>
-</p>
 <img src=img/teaser.jpg width="100%"/>
 
 ## CountGD Architecture
