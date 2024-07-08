@@ -2,7 +2,7 @@
 
 Niki Amini-Naieni, Tengda Han, & Andrew Zisserman
 
-Official PyTorch implementation for CountGD. Details can be found in the paper, [[Paper]]() [[Project page]](https://www.robots.ox.ac.uk/~vgg/research/countgd/).
+Official PyTorch implementation for CountGD. Details can be found in the paper, [[Paper]](https://arxiv.org/abs/2407.04619) [[Project page]](https://www.robots.ox.ac.uk/~vgg/research/countgd/).
 
 ## Try Using CountGD to Count with Text, Visual Exemplars, or Both Together Through the App [[HERE]](https://huggingface.co/spaces/nikigoli/countgd).
 
