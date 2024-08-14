@@ -1,7 +1,10 @@
 import subprocess
+import torch
+import os
+
 from setuptools import setup, find_packages
 from setuptools.command.install import install
-
+from extensions import get_extensions
 
 class BuildOpsInstallCommand(install):
     """Customized setuptools install command - runs a shell script after install."""
@@ -10,7 +13,6 @@ class BuildOpsInstallCommand(install):
         install.run(self)
         # Run the shell script
         subprocess.check_call(["./build_ops.sh"])
-
 
 setup(
     name="CountGD",
@@ -28,7 +30,7 @@ setup(
         "yapf==0.40.1",
         "timm==0.9.16",
         "torch==2.2.2",
-        "torchvision==0.17.1",
+        "torchvision==0.17.2",
         "transformers==4.42.3",
         "numpy==1.26.4",
         "opencv-python==4.9.0.80",
@@ -42,7 +44,5 @@ setup(
         "Operating System :: OS Independent",
     ],
     python_requires=">=3.10",
-    cmdclass={
-        "install": BuildOpsInstallCommand,
-    },
+    # cmdclass={"install": BuildOpsInstallCommand},
 )

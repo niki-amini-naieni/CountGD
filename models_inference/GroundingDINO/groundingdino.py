@@ -115,7 +115,6 @@ class GroundingDINO(nn.Module):
         text_encoder_type="bert-base-uncased",
         sub_sentence_present=True,
         max_text_len=256,
-        carpk=False,
     ):
         """Initializes the model.
         Parameters:
@@ -133,13 +132,12 @@ class GroundingDINO(nn.Module):
         self.nheads = nheads
         self.max_text_len = max_text_len
         self.sub_sentence_present = sub_sentence_present
-        self.drop_text = False
 
         # setting query dim
         self.query_dim = query_dim
         assert query_dim == 4
 
-        # 1x1 convolution to project upsampled and concatenated Multi-scale Swin-T features from (256 + 512 + 1024) = 1792 to 256 channels before cropping out visual exemplar tokens
+        # visual exemplar cropping
         self.feature_map_proj = nn.Conv2d((256 + 512 + 1024), hidden_dim, kernel_size=1)
 
         # for dn training
@@ -161,6 +159,7 @@ class GroundingDINO(nn.Module):
         )
         nn.init.constant_(self.feat_map.bias.data, 0)
         nn.init.xavier_uniform_(self.feat_map.weight.data)
+        # freeze
 
         # special tokens
         self.specical_tokens = self.tokenizer.convert_tokens_to_ids(
@@ -276,27 +275,17 @@ class GroundingDINO(nn.Module):
         encoded_text = text_dict["encoded_text"]
         new_encoded_text = []
         text_token_mask = text_dict["text_token_mask"]
-
         new_text_token_mask = []
         position_ids = text_dict["position_ids"]
         text_self_attention_masks = text_dict["text_self_attention_masks"]
 
         for sample_ind in range(len(labels)):
-
             label = labels[sample_ind][0]
             exemplars = exemplar_tokens[sample_ind]
             label_count = -1
             assert len(input_ids[sample_ind]) == len(position_ids[sample_ind])
             for token_ind in range(len(input_ids[sample_ind])):
                 input_id = input_ids[sample_ind][token_ind]
-                if (
-                    (token_ind < (len(input_ids[sample_ind]) - 1))
-                    and (input_id == 1012 or input_id == 101)
-                    and (input_ids[sample_ind][token_ind + 1] == 1012)
-                ):
-                    # Handle no text /modality dropout case.
-                    ind_to_insert_exemplar = token_ind + 1
-                    break
                 if (input_id not in self.specical_tokens) and (
                     token_ind == 0
                     or (input_ids[sample_ind][token_ind - 1] in self.specical_tokens)
@@ -312,6 +301,9 @@ class GroundingDINO(nn.Module):
                         ind_to_insert_exemplar += 1
                     break
 
+            # Handle no text case.
+            if label_count == -1:
+                ind_to_insert_exemplar = 1
             # * token indicates exemplar.
             new_input_ids.append(
                 torch.cat(
@@ -332,13 +324,7 @@ class GroundingDINO(nn.Module):
                 )
             )
             new_text_token_mask.append(
-                torch.cat(
-                    [
-                        text_token_mask[sample_ind][:ind_to_insert_exemplar],
-                        torch.full((exemplars.shape[0],), True).cuda(),
-                        text_token_mask[sample_ind][ind_to_insert_exemplar:],
-                    ]
-                )
+                torch.full((len(new_input_ids[sample_ind]),), True).to(device)
             )
 
         tokenized["input_ids"] = torch.stack(new_input_ids)
@@ -386,6 +372,7 @@ class GroundingDINO(nn.Module):
     def forward(
         self,
         samples: NestedTensor,
+        exemplar_images: NestedTensor,
         exemplars: List,
         labels,
         targets: List = None,
@@ -483,7 +470,8 @@ class GroundingDINO(nn.Module):
 
         if not cropped:
             features, poss = self.backbone(samples)
-            combined_features = self.combine_features(features)
+            features_exemp, _ = self.backbone(exemplar_images)
+            combined_features = self.combine_features(features_exemp)
             # Get visual exemplar tokens.
             bs = len(exemplars)
             num_exemplars = exemplars[0].shape[0]
@@ -504,7 +492,6 @@ class GroundingDINO(nn.Module):
                 exemplar_tokens = None
 
         else:
-            num_exemplars = exemplars[0].shape[0]
             features, poss = self.backbone(samples)
             (h, w) = (
                 samples.decompose()[0][0].shape[1],
@@ -515,7 +502,7 @@ class GroundingDINO(nn.Module):
 
             exemp_imgs = []
             new_exemplars = []
-
+            ind = 0
             for exemp in exemplars[0]:
                 center_x = (exemp[0] + exemp[2]) / 2
                 center_y = (exemp[1] + exemp[3]) / 2
@@ -541,31 +528,41 @@ class GroundingDINO(nn.Module):
                     ]
                 )
 
-            if num_exemplars > 0:
-                exemp_imgs = nested_tensor_from_tensor_list(exemp_imgs)
-                features_exemp, _ = self.backbone(exemp_imgs)
-                combined_features = self.combine_features(features_exemp)
-                new_exemplars = [
-                    torch.tensor(exemp).unsqueeze(0).cuda() for exemp in new_exemplars
-                ]
-
-                # Get visual exemplar tokens.
-                exemplar_tokens = (
-                    roi_align(
-                        combined_features,
-                        boxes=new_exemplars,
-                        output_size=(1, 1),
-                        spatial_scale=(1 / 8),
-                        aligned=True,
-                    )
-                    .squeeze(-1)
-                    .squeeze(-1)
-                    .reshape(num_exemplars, 256)
+                vis_exemps(
+                    renorm(exemp_imgs[-1].cpu()).permute(1, 2, 0).numpy(),
+                    [coord.item() for coord in new_exemplars[-1]],
+                    str(ind) + ".jpg",
                 )
+                vis_exemps(
+                    renorm(orig_img.cpu()).permute(1, 2, 0).numpy(),
+                    [coord.item() for coord in exemplars[0][ind]],
+                    "orig-" + str(ind) + ".jpg",
+                )
+                ind += 1
 
-                exemplar_tokens = torch.stack([exemplar_tokens] * bs)
-            else:
-                exemplar_tokens = None
+            exemp_imgs = nested_tensor_from_tensor_list(exemp_imgs)
+            features_exemp, _ = self.backbone(exemp_imgs)
+            combined_features = self.combine_features(features_exemp)
+            new_exemplars = [
+                torch.tensor(exemp).unsqueeze(0).to(samples.device)
+                for exemp in new_exemplars
+            ]
+
+            # Get visual exemplar tokens.
+            exemplar_tokens = (
+                roi_align(
+                    combined_features,
+                    boxes=new_exemplars,
+                    output_size=(1, 1),
+                    spatial_scale=(1 / 8),
+                    aligned=True,
+                )
+                .squeeze(-1)
+                .squeeze(-1)
+                .reshape(3, 256)
+            )
+
+            exemplar_tokens = torch.stack([exemplar_tokens] * bs)
 
         if exemplar_tokens is not None:
             text_dict = self.add_exemplar_tokens(
@@ -734,7 +731,6 @@ class SetCriterion(nn.Module):
             [t["boxes"][i] for t, (_, i) in zip(targets, indices)], dim=0
         )
 
-        # Use the box centers to align with dot annotation maps.
         loss_bbox = F.l1_loss(src_boxes[:, :2], target_boxes[:, :2], reduction="none")
 
         losses = {}
@@ -1289,7 +1285,6 @@ def create_positive_map(tokenized, tokens_positive, cat_list, caption):
 
 
 def create_positive_map_exemplar(input_ids, label, special_tokens):
-
     tokens_positive = torch.zeros(256, dtype=torch.float)
     count = -1
     for token_ind in range(len(input_ids)):
