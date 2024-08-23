@@ -14,13 +14,24 @@ class BuildOpsInstallCommand(install):
         # Run the shell script
         subprocess.check_call(["./build_ops.sh"])
 
+# print(find_packages(include=["countgd"]))
+# breakpoint()
 setup(
-    name="CountGD",
+    name="countgd",
     version="0.1.0",
     author="Niki Amini-Naieni, Tengda Han, & Andrew Zisserman",
     description="Forked PyTorch implementation for CountGD.",
     url="https://github.com/landing-ai/CountGD",
-    packages=find_packages(),
+    # packages=[
+    #     "countgd.datasets_inference",
+    #     "countgd.models",
+    #     "countgd.models_inference",
+    #     "countgd.models_inference.GroundingDINO"
+    #     "countgd.models_inference.GroundingDINO.backbone"
+    #     "countgd.util",
+    # ],
+    # packages=find_packages(include=["countgd", "countgd.*"]),
+    packages=find_packages(include=["countgd"]),
     install_requires=[
         "cython==3.0.9",
         "submitit==1.5.1",
@@ -38,11 +49,14 @@ setup(
         "pyyaml==6.0.1",
         "colorlog==6.8.2",
     ],
-    classifiers=[
-        "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
-    ],
     python_requires=">=3.10",
+    # package_dir={
+    #     "countgd.datasets_inference": "datasets_inference",
+    #     "countgd.models": "models",
+    #     "countgd.models_inference": "models_inference",
+    #     "countgd.util": "util",
+    #     "countgd.groundingdino": "groundingdino",
+    # },
+    # package_dir={"countgd": "countgd"},
     # cmdclass={"install": BuildOpsInstallCommand},
 )
