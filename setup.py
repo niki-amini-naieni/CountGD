@@ -31,7 +31,7 @@ setup(
     #     "countgd.util",
     # ],
     # packages=find_packages(include=["countgd", "countgd.*"]),
-    packages=find_packages(include=["countgd"], exclude=["countgd.*.*"]),
+    packages=find_packages(include=["countgd"]),
     install_requires=[
         "cython==3.0.9",
         "submitit==1.5.1",
