@@ -31,7 +31,7 @@ setup(
     #     "countgd.util",
     # ],
     # packages=find_packages(include=["countgd", "countgd.*"]),
-    packages=find_packages(include=["countgd"]),
+    packages=find_packages(include=["countgd"], exclude=["countgd.*.*"]),
     install_requires=[
         "cython==3.0.9",
         "submitit==1.5.1",
@@ -57,6 +57,6 @@ setup(
     #     "countgd.util": "util",
     #     "countgd.groundingdino": "groundingdino",
     # },
-    # package_dir={"countgd": "countgd"},
+    package_dir={"countgd": "countgd"},
     # cmdclass={"install": BuildOpsInstallCommand},
 )
