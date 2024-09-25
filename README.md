@@ -1,4 +1,4 @@
-# CountGD: Multi-Modal Open-World Counting
+# [NeurIPS 2024] CountGD: Multi-Modal Open-World Counting
 
 Niki Amini-Naieni, Tengda Han, & Andrew Zisserman
 
