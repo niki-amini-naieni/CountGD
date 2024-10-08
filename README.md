@@ -122,10 +122,10 @@ Training code and instructions coming soon!
 ## Citation
 
 ```
-@article{AminiNaieni24,
+@InProceedings{AminiNaieni24,
   author = "Amini-Naieni, N. and Han, T. and Zisserman, A.",
   title = "CountGD: Multi-Modal Open-World Counting",
-  booktitle = "arXiv",
+  booktitle = "Advances in Neural Information Processing Systems (NeurIPS)",
   year = "2024",
 }
 ```
