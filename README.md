@@ -117,7 +117,7 @@ python -u main_inference.py --output_dir ./countgd_test -c config/cfg_fsc147_tes
 
 ## CountGD Train
 
-Training code and instructions coming soon!
+See [here](https://github.com/niki-amini-naieni/CountGD/blob/main/training.md)
 
 ## Citation
 
