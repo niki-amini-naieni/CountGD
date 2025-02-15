@@ -15,6 +15,7 @@ Official PyTorch implementation for CountGD. Details can be found in the paper, 
 ## Contents
 * [Preparation](#preparation)
 * [CountGD Inference & Pre-Trained Weights](#countgd-inference--pre-trained-weights)
+* [Testing Your Own Dataset](#testing-your-own-dataset)
 * [CountGD Train](#countgd-train)
 * [CountBench](#countbench)
 * [Citation](#citation)
@@ -115,6 +116,10 @@ python -u main_inference.py --output_dir ./countgd_test -c config/cfg_fsc147_tes
 ```
 
 * Note: Inference can be further sped up by increasing the batch size for evaluation
+
+## Testing Your Own Dataset
+
+You can run CountGD on all the images in a zip folder uploaded to Google Drive using the Colab notebook [here](https://github.com/niki-amini-naieni/CountGD/blob/main/google-drive-batch-process-countgd.ipynb). This code supports a single text description for the whole dataset but can be easily modified to handle different text descriptions for different images and to support exemplar inputs.
 
 ## CountGD Train
 
