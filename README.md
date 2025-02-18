@@ -119,7 +119,7 @@ python -u main_inference.py --output_dir ./countgd_test -c config/cfg_fsc147_tes
 
 ## Testing Your Own Dataset
 
-You can run CountGD on all the images in a zip folder uploaded to Google Drive using the Colab notebook [here](https://github.com/niki-amini-naieni/CountGD/blob/main/google-drive-batch-process-countgd.ipynb). This code supports a single text description for the whole dataset but can be easily modified to handle different text descriptions for different images and to support exemplar inputs.
+You can run CountGD on all the images in a zip folder uploaded to Google Drive using the Colab notebook [here](https://github.com/niki-amini-naieni/CountGD/blob/main/google-drive-batch-process-countgd.ipynb) in the repository or [here](https://colab.research.google.com/drive/1arl2jYZPk9ntT4dYH6btUAW4t1WanxfE?usp=sharing) online. This code supports a single text description for the whole dataset but can be easily modified to handle different text descriptions for different images and to support exemplar inputs.
 
 ## CountGD Train
 
