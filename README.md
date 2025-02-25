@@ -6,7 +6,7 @@ Official PyTorch implementation for CountGD. Details can be found in the paper, 
 
 ## Try Using CountGD to Count with Text, Visual Exemplars, or Both Together Through the App [[HERE]](https://huggingface.co/spaces/nikigoli/countgd).
 
-## Try Out the Colab Notebook to Count All the Images in a Zip Folder With Text [[HERE]](https://colab.research.google.com/drive/1arl2jYZPk9ntT4dYH6btUAW4t1WanxfE?usp=sharing).
+## Try Out the Colab Notebook to Count All the Images in a Zip Folder With Text [[HERE]](https://huggingface.co/spaces/nikigoli/countgd/blob/main/notebooks/demo.ipynb).
 
 <img src=img/teaser.jpg width="100%"/>
 
@@ -121,7 +121,7 @@ python -u main_inference.py --output_dir ./countgd_test -c config/cfg_fsc147_tes
 
 ## Testing Your Own Dataset
 
-You can run CountGD on all the images in a zip folder uploaded to Google Drive using the Colab notebook [here](https://github.com/niki-amini-naieni/CountGD/blob/main/google-drive-batch-process-countgd.ipynb) in the repository or [here](https://colab.research.google.com/drive/1arl2jYZPk9ntT4dYH6btUAW4t1WanxfE?usp=sharing) online. This code supports a single text description for the whole dataset but can be easily modified to handle different text descriptions for different images and to support exemplar inputs.
+You can run CountGD on all the images in a zip folder uploaded to Google Drive using the Colab notebook [here](https://github.com/niki-amini-naieni/CountGD/blob/main/google-drive-batch-process-countgd.ipynb) in the repository or [here](https://huggingface.co/spaces/nikigoli/countgd/blob/main/notebooks/demo.ipynb) online. This code supports a single text description for the whole dataset but can be easily modified to handle different text descriptions for different images and to support exemplar inputs.
 
 ## CountGD Train
 
