@@ -123,7 +123,7 @@ You can run CountGD on all the images in a zip folder uploaded to Google Drive u
 
 ## CountGD Train
 
-See [here](https://github.com/niki-amini-naieni/CountGD/blob/main/training.md) and [here](https://github.com/niki-amini-naieni/CountGD/issues/32)
+See [here](https://github.com/niki-amini-naieni/CountGD/blob/main/training.md) for the code and [here](https://github.com/niki-amini-naieni/CountGD/issues/32) about a relevant issue
 
 ## CountBench
 
