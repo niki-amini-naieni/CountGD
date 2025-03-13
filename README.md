@@ -6,7 +6,7 @@ Official PyTorch implementation for CountGD. Details can be found in the paper, 
 
 ## Try Using CountGD to Count with Text, Visual Exemplars, or Both Together Through the App [[HERE]](https://huggingface.co/spaces/nikigoli/countgd).
 
-## Try Out the Colab Notebook to Count All the Images in a Zip Folder With Text [[HERE]](https://huggingface.co/spaces/nikigoli/countgd/blob/main/notebooks/demo.ipynb).
+## Try Out the Colab Notebook to Count Objects in All the Images in a Zip Folder With Text [[HERE]](https://huggingface.co/spaces/nikigoli/countgd/blob/main/notebooks/demo.ipynb).
 
 <img src=img/teaser.jpg width="100%"/>
 
