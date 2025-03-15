@@ -4,6 +4,8 @@ Niki Amini-Naieni, Tengda Han, & Andrew Zisserman
 
 Official PyTorch implementation for CountGD. Details can be found in the paper, [[Paper]](https://arxiv.org/abs/2407.04619) [[Project page]](https://www.robots.ox.ac.uk/~vgg/research/countgd/).
 
+If you find this repository useful, please give us a star ⭐.
+
 ## Try Using CountGD to Count with Text, Visual Exemplars, or Both Together Through the App [[HERE]](https://huggingface.co/spaces/nikigoli/countgd).
 
 ## Try Out the Colab Notebook to Count Objects in All the Images in a Zip Folder With Text [[HERE]](https://huggingface.co/spaces/nikigoli/countgd/blob/main/notebooks/demo.ipynb).
@@ -132,6 +134,7 @@ See [here](https://github.com/niki-amini-naieni/CountGD/blob/main/training.md) f
 See [here](https://github.com/niki-amini-naieni/CountGD/issues/6)
 
 ## Citation
+If you use our research in your project, please cite our paper.
 
 ```
 @InProceedings{AminiNaieni24,
