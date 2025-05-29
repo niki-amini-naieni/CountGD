@@ -22,6 +22,7 @@ If you find this repository useful, please give it a star ⭐.
 * [Testing Your Own Dataset](#testing-your-own-dataset)
 * [CountGD Train](#countgd-train)
 * [CountBench](#countbench)
+* [CARPK](#carpk)
 * [Citation](#citation)
 * [Acknowledgements](#acknowledgements)
 
@@ -132,6 +133,23 @@ See [here](https://github.com/niki-amini-naieni/CountGD/blob/main/training.md) f
 ## CountBench
 
 See [here](https://github.com/niki-amini-naieni/CountGD/issues/6)
+
+## CARPK
+
+To test CountGD on the CARPK test set,
+
+First install packages for obtaining the CARPK dataset:
+
+```
+pip install hub
+pip install "deeplake<4"
+```
+
+Then run:
+
+```
+python test_carpk.py --pretrain_model_path checkpoints/checkpoint_fsc147_best.pth --config config/cfg_fsc147_vit_b_test.py --confidence_thresh 0.23 --test --use_exemplars
+```
 
 ## Citation
 If you use our research in your project, please cite our paper.
