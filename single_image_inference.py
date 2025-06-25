@@ -168,7 +168,7 @@ boxes = boxes[box_mask, :]
 pred_count = boxes.shape[0]
 
 # Plot output.
-(w, h) = input_image.size
+(w, h) = Image.open(args.image_path).size
 det_map = np.zeros((h, w))
 det_map[(h * boxes[:, 1]).cpu().numpy().astype(int), (w * boxes[:, 0]).cpu().numpy().astype(int)] = 1
 det_map = ndimage.gaussian_filter(
