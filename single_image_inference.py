@@ -21,7 +21,7 @@ def get_args_parser():
     """
     Example eval command:
 
-    >> python main.py --output_dir ./gdino_test -c config/cfg_fsc147_vit_b_test.py --eval --datasets config/datasets_fsc147.json --pretrain_model_path ../checkpoints_and_logs/gdino_train/checkpoint_best_regular.pth --options text_encoder_type=checkpoints/bert-base-uncased --sam_tt_norm --crop
+    >>  python single_image_inference.py --pretrain_model_path checkpoints/checkpoint_fsc147_best.pth --image_path car.jpg --output_image_name "test.jpg" --text 'car'
     """
     parser = argparse.ArgumentParser("Testing on CountBench", add_help=False)
     parser.add_argument(
